@@ -4,6 +4,11 @@
 
 {% block body %}
 
-    <h1>All Pins</h1>
+    <h1>{{ pluralize(pins|length, 'Pin') }}</h1>
+
+    {% for pin in pins %}
+        <h2>{{ pin.title }}</h2>
+        <p>{{ pin.description }}</p>
+    {% endfor %}
 
 {% endblock %}
