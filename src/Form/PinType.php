@@ -6,6 +6,7 @@ use App\Entity\Pin;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PinType extends AbstractType
 {
@@ -14,6 +15,13 @@ class PinType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Image (JPG or PNG file)',
+                'required' => false,
+                'allow_delete' => true,
+                'download_uri' => false,
+                'imagine_pattern' => 'squared_thumbnail_small'
+            ])
         ;
     }
 
