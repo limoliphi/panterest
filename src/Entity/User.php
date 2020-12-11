@@ -121,7 +121,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return $this->email;
     }
 
     /**
@@ -148,7 +148,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
@@ -208,7 +208,12 @@ class User implements UserInterface
 
     public function getFullName(): string
     {
-        return $this->getFirstName() . '' . $this->getLastName();
+        return $this->getFirstName() . ' ' . $this->getLastName();
+    }
+
+    public function getGravatarUrl(?int $size = 100)
+    {
+        return sprintf('https://www.gravatar.com/avatar/%s?s=%d', md5(strtolower(trim($this->getEmail()))), $size);
     }
 
     public function isVerified(): bool
