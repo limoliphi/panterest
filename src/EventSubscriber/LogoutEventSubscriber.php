@@ -22,7 +22,7 @@ class LogoutEventSubscriber implements EventSubscriberInterface
     public function onLogoutEvent(LogoutEvent $event)
     {
         //message flash et redirection utilisateur vers la page d'accueil
-        $this->flashBag->add('success', 'Logged on successfully');
+        $this->flashBag->add('success', 'Logged out successfully');
 
         // la réponse doit générer une url donc il faut un construct qui génère une URL
         $event->setResponse(new RedirectResponse($this->urlGenerator->generate('app_home')));
