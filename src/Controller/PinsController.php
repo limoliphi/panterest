@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class PinsController extends AbstractController
 {
@@ -28,6 +30,7 @@ class PinsController extends AbstractController
 
     /**
      * @Route("/pins/create", name="app_pins_create", methods="GET|POST")
+     * @IsGranted("PIN_CREATE")
      */
     public function create(Request $request, EntityManagerInterface $em, UserRepository $userRepository): Response
     {
@@ -61,12 +64,13 @@ class PinsController extends AbstractController
     }
 
     /**
-     * @Route("/pins/{id<[0-9]+>}/edit", name="app_pins_edit", methods="GET|PUT")
+     * @Route("/pins/{id<[0-9]+>}/edit", name="app_pins_edit", methods="GET|PATCH")
+     * @Security("is_granted('PIN_MANAGE', pin)")
      */
     public function edit(Pin $pin, Request $request, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(PinType::class, $pin, [
-            'method' => 'PUT'
+            'method' => 'PATCH'
         ]);
 
         $form->handleRequest($request);
@@ -88,6 +92,7 @@ class PinsController extends AbstractController
 
     /**
      * @Route("/pins/{id<[0-9]+>}", name="app_pins_delete", methods="DELETE")
+     * @IsGranted("PIN_MANAGE", subject="pin")
      */
     public function delete(Request $request, Pin $pin, EntityManagerInterface $em): Response
     {
