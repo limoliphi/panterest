@@ -14,12 +14,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/account")
- * @IsGranted("ROLE_USER")
  */
 class AccountController extends AbstractController
 {
     /**
      * @Route("", name="app_account", methods="GET")
+     * @IsGranted("ROLE_USER")
      */
     public function show(): Response
     {
@@ -28,6 +28,7 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/edit", name="app_account_edit", methods={"GET", "PATCH"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function edit(Request $request, EntityManagerInterface $em): Response
     {
@@ -54,6 +55,7 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/change-password", name="app_account_change_password", methods={"GET", "PATCH"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function changePassword(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder): Response
     {
